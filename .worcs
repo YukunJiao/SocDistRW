@@ -1,0 +1,28 @@
+worcs_version: 0.1.19
+creator: doge
+entry_point: manuscript/manuscript.Rmd
+recipe:
+  recipe: targets::tar_make()
+  terminal: no
+data:
+  friend.csv:
+    save_expression: write.csv(x = data, file = filename, row.names = FALSE)
+    load_expression: read.csv(file = filename, stringsAsFactors = TRUE)
+    codebook: codebook_friend.Rmd
+  advise.csv:
+    save_expression: write.csv(x = data, file = filename, row.names = FALSE)
+    load_expression: read.csv(file = filename, stringsAsFactors = TRUE)
+    codebook: codebook_advise.Rmd
+  work.csv:
+    save_expression: write.csv(x = data, file = filename, row.names = FALSE)
+    load_expression: read.csv(file = filename, stringsAsFactors = TRUE)
+    codebook: codebook_work.Rmd
+  attr.csv:
+    save_expression: write.csv(x = data, file = filename, row.names = FALSE)
+    load_expression: read.csv(file = filename, stringsAsFactors = TRUE)
+    codebook: codebook_attr.Rmd
+checksums:
+  friend.csv: ce62dbf08dda6fc9fe18531a22c76d79
+  advise.csv: 92ed50d424da7f92f6c1b662f694dc14
+  work.csv: 8617d50426b97b3e94ff92b0eda996c7
+  attr.csv: c8a0a5bcf662a535fceeb48c878b92ef

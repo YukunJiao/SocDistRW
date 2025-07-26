@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 <!-- Please add a brief introduction to explain what the project is about    -->
-
+This project is about how to measure social distance by random walk (not by shortest path).
 ## Where do I start?
 
 You can load this project in RStudio by opening the file called 'SocDistRW.Rproj'.

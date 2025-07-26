@@ -1,0 +1,45 @@
+---
+title: "Codebook created on 2025-07-26 at 2025-07-26 13:44:03.85504"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, results = 'asis')
+```
+
+
+A codebook contains documentation and metadata describing the contents, structure, and layout of a data file.
+
+## Dataset description
+The data contains 71 cases and 8 variables.
+
+## Codebook
+
+```{r}
+summaries <- read.csv("codebook_attr.csv", stringsAsFactors = FALSE)
+summaries <- summaries[, !colSums(is.na(summaries)) == nrow(summaries)]
+options(knitr.kable.NA = '')
+knitr::kable(summaries, row.names = FALSE, digits = 2)
+```
+
+### Legend
+
+* __Name__: Variable name
+* __type__: Data type of the variable
+* __missing__: Proportion of missing values for this variable
+* __unique__: Number of unique values
+* __mean__: Mean value
+* __median__: Median value
+* __mode__: Most common value (for categorical variables, this shows the frequency of the most common category)
+* **mode_value**: For categorical variables, the value of the most common category
+* __sd__: Standard deviation (measure of dispersion for numerical variables
+* __v__: Agresti's V (measure of dispersion for categorical variables)
+* __min__: Minimum value
+* __max__: Maximum value
+* __range__: Range between minimum and maximum value
+* __skew__: Skewness of the variable
+* __skew_2se__: Skewness of the variable divided by 2*SE of the skewness. If this is greater than abs(1), skewness is significant
+* __kurt__: Kurtosis (peakedness) of the variable
+* __kurt_2se__: Kurtosis of the variable divided by 2*SE of the kurtosis. If this is greater than abs(1), kurtosis is significant.
+
+This codebook was generated using the [Workflow for Open Reproducible Code in Science (WORCS)](https://osf.io/zcvbs/)
