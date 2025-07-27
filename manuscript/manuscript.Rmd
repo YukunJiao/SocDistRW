@@ -39,10 +39,33 @@ This is an R Markdown format used for publishing markdown documents to GitHub. W
 You can include R code in the document as follows:
 
 ```{r cars}
-summary(cars)
+library(theorytools)
+library(dagitty)
+library(tidySEM)
 ```
 
 ## Including Plots
+```{r}
+theorytools::download_theory("../10.5281/zenodo.15648655", path = "../theory")
+sdt <- dagitty::dagitty(paste(readLines("../theory/sdt.txt"), collapse = "\n"))
+sdt_pruned <- theorytools:::prune_dag(sdt,
+                                      exposure = "intrinsic_motivation",
+                                      outcome = "wellbeing")
+writeLines(
+  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
+  "../R/generate_data.R"
+)
+
+writeLines(
+  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
+  "../R/analyze_data.R"
+)
+
+writeLines(
+  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
+  "../R/perform_study.R"
+)
+```
 
 You can also embed plots, for example:
 
