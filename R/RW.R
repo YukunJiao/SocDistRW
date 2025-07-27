@@ -5,7 +5,7 @@ attr <- read.csv("attr.csv", header = TRUE)
 
 g <- graph_from_adjacency_matrix(friend)
 # 确保attr和节点数对齐
-stopifnot(nrow(attr) == vcount(g))
+# stopifnot(nrow(attr) == vcount(g))
 
 {# 添加属性
 V(g)$seniority <- attr[, 1]
@@ -17,13 +17,16 @@ V(g)$age <- attr[, 6]
 V(g)$practice <- attr[, 7]         # 1=litigation; 2=corporate
 V(g)$law_school <- attr[, 8]     # 1: Harvard/Yale; 2: UConn; 3: Other
 }
+
 compute_gender_first_encounter_distance <- function(g, 
-                                                    source_gender = "male", 
-                                                    target_gender = "female", 
+                                                    attr_name = "gender",
+                                                    source_attr = 1, 
+                                                    target_attr = 2, 
                                                     max_steps = 1000, 
-                                                    n_walks_per_node = 10) {
+                                                    n_walks_per_node = 50) {
   # 找到所有起点
-  source_nodes <- V(g)[V(g)$gender == source_gender]
+  attr_values <- vertex_attr(g, attr_name)
+  source_nodes <- V(g)[attr_values == source_attr]
   
   distances <- c()  # 用于收集每次成功遇见的步数
   
@@ -40,7 +43,7 @@ compute_gender_first_encounter_distance <- function(g,
         current <- sample(neighbors, 1)  # 随机前进
         step <- step + 1
         
-        if (V(g)[current]$gender == target_gender) {
+        if (vertex_attr(g, attr_name, index = current) == target_attr) {
           distances <- c(distances, step)
           found <- TRUE
           break
@@ -61,10 +64,12 @@ compute_gender_first_encounter_distance <- function(g,
 set.seed(42)
 V(g)$gender
 # 计算从 male 到 female 的 first-encounter 平均步数
-avg_distance <- compute_gender_first_encounter_distance(g, 1, 2)
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "gender", 1, 2)
 print(avg_distance)
 
 # 计算从 female 到 male 的 first-encounter 平均步数
-avg_distance <- compute_gender_first_encounter_distance(g, 2, 1)
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "gender", 2, 1)
 print(avg_distance)
+
+#---
 
