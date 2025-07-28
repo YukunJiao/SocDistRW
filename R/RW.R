@@ -1,6 +1,8 @@
 library(igraph)
 
 friend <- read.csv("friend.csv", header = TRUE) |> as.matrix()
+advise <- read.csv("advise.csv", header = TRUE) |> as.matrix()
+work <- read.csv("work.csv", header = TRUE) |> as.matrix()
 attr <- read.csv("attr.csv", header = TRUE)
 
 g <- graph_from_adjacency_matrix(friend)
@@ -23,10 +25,10 @@ compute_gender_first_encounter_distance <- function(g,
                                                     source_attr = 1, 
                                                     target_attr = 2, 
                                                     max_steps = 1000, 
-                                                    n_walks_per_node = 50) {
+                                                    n_walks_per_node = 20) {
   # 找到所有起点
   attr_values <- vertex_attr(g, attr_name)
-  source_nodes <- V(g)[attr_values == source_attr]
+  source_nodes <- V(g)[attr_values %in% source_attr]
   
   distances <- c()  # 用于收集每次成功遇见的步数
   
@@ -56,7 +58,7 @@ compute_gender_first_encounter_distance <- function(g,
     warning("No successful first encounters.")
     return(NA)
   } else {
-    return(mean(distances))
+    return(print(mean(distances)))
   }
 }
 
@@ -65,11 +67,25 @@ set.seed(42)
 V(g)$gender
 # 计算从 male 到 female 的 first-encounter 平均步数
 avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "gender", 1, 2)
-print(avg_distance)
+
 
 # 计算从 female 到 male 的 first-encounter 平均步数
 avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "gender", 2, 1)
-print(avg_distance)
+
 
 #---
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "status", 1, 2)
 
+
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "status", 2, 1)
+
+
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "practice", 1, 2)
+
+
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "practice", 2, 1)
+
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "law_school", 1, 2)
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "law_school", 2, 1)
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "law_school", 1, 3)
+avg_distance <- compute_gender_first_encounter_distance(g, attr_name = "law_school", 3, 1)
