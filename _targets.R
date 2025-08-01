@@ -53,7 +53,7 @@ tar_source()
 list(
   tar_target(
     name = data,
-    command = tibble(x = rnorm(100), y = rnorm(100))
+    command = generate_network()
     # format = "qs" # Efficient storage for general data objects.
   ),
   tar_target(

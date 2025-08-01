@@ -2,25 +2,7 @@ library(igraph)
 
 # 构图和属性处理同你的脚本
 
-friend <- read.csv("friend.csv", header = TRUE) |> as.matrix()
-advise <- read.csv("advise.csv", header = TRUE) |> as.matrix()
-work <- read.csv("work.csv", header = TRUE) |> as.matrix()
-attr <- read.csv("attr.csv", header = TRUE)
 
-g <- graph_from_adjacency_matrix(friend)
-# 确保attr和节点数对齐
-# stopifnot(nrow(attr) == vcount(g))
-
-{# 添加属性
-  V(g)$seniority <- attr[, 1]
-  V(g)$status <- attr[, 2]             # 1=partner; 2=associate
-  V(g)$gender <- attr[, 3]             # 1=man; 2=woman
-  V(g)$office <- attr[, 4]             # 1=Boston; 2=Hartford; 3=Providence
-  V(g)$years_with_firm <- attr[, 5]
-  V(g)$age <- attr[, 6]
-  V(g)$practice <- attr[, 7]         # 1=litigation; 2=corporate
-  V(g)$law_school <- attr[, 8]     # 1: Harvard/Yale; 2: UConn; 3: Other
-}
 
 # 构造 transition matrix P（马尔可夫转移矩阵）
 get_transition_matrix <- function(g) {

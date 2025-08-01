@@ -1,12 +1,12 @@
 # Set random seed
-set.seed(378383713)
+set.seed(425994774)
 # Set simulation parameters
 n <- 100
 # Simulate exogenous nodes
 needs <- rnorm(n = n)
 # Simulate endogenous nodes
-intrinsic_motivation <- -(0.14 * needs) + rnorm(n = n)
-wellbeing <- 0.18 * intrinsic_motivation + 0.53 * needs + rnorm(n = n)
+intrinsic_motivation <- -(0.12 * needs) + rnorm(n = n)
+wellbeing <- 0.48 * needs + 0.51 * intrinsic_motivation + rnorm(n = n)
 df <- data.frame(
 intrinsic_motivation = intrinsic_motivation,
 needs = needs,
