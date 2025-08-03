@@ -1,6 +1,8 @@
 Untitled
 ================
-31 July, 2025
+02 August, 2025
+
+heterogeneous multilayer network with hyper graph
 
 ## Multimodal Hypergraph Representation for Swedish population register:
 
@@ -51,49 +53,14 @@ a markdown file (.md) suitable for publishing to GitHub is generated.
 You can include R code in the document as follows:
 
 ``` r
-library(theorytools)
-library(dagitty)
-library(tidySEM)
+plot(g)
 ```
 
-    ## 
-    ## Attaching package: 'tidySEM'
-
-    ## The following object is masked from 'package:dagitty':
-    ## 
-    ##     edges
-
-    ## The following objects are masked from 'package:worcs':
-    ## 
-    ##     descriptives, report, skew_kurtosis
+![](manuscript_files/figure-gfm/cars-1.png)<!-- -->
 
 ## Including Plots
 
-``` r
-theorytools::download_theory("../10.5281/zenodo.15648655", path = "../theory")
-sdt <- dagitty::dagitty(paste(readLines("../theory/sdt.txt"), collapse = "\n"))
-sdt_pruned <- theorytools:::prune_dag(sdt,
-                                      exposure = "intrinsic_motivation",
-                                      outcome = "wellbeing")
-writeLines(
-  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
-  "../R/generate_data.R"
-)
-
-writeLines(
-  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
-  "../R/analyze_data.R"
-)
-
-writeLines(
-  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
-  "../R/perform_study.R"
-)
-```
-
 You can also embed plots, for example:
-
-![](manuscript_files/figure-gfm/pressure-1.png)<!-- -->
 
 Note that the `echo = FALSE` parameter was added to the code chunk to
 prevent printing of the R code that generated the plot.

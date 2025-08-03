@@ -22,15 +22,18 @@ library("worcs")
 # and end that file with either open_data(yourdata), or closed_data(yourdata).
 # Then, uncomment the line below to load the original or synthetic data
 # (whichever is available), to allow anyone to reproduce your code:
-# load_data()
+load_data()
 knitr::opts_chunk$set(echo = TRUE)
 # Setup for targets:
 
 library(targets)
-tar_config_set(store = "../_targets")
-# tar_load(model)
-# You can interact with tar objects as usual, e.g.:
-# print(model)
+library(here)
+tar_config_set(store = here("_targets"))
+
+tar_load(g)
+
+tar_load(result_df)
+
 ```
 
 This manuscript uses the Workflow for Open Reproducible Code in Science [@vanlissaWORCSWorkflowOpen2021] to ensure reproducibility and transparency. All code <!--and data--> are available at <SocDistRW>.
@@ -49,38 +52,19 @@ This is an R Markdown format used for publishing markdown documents to GitHub. W
 You can include R code in the document as follows:
 
 ```{r cars}
-library(theorytools)
-library(dagitty)
-library(tidySEM)
+plot(g)
 ```
 
 ## Including Plots
 ```{r}
-theorytools::download_theory("../10.5281/zenodo.15648655", path = "../theory")
-sdt <- dagitty::dagitty(paste(readLines("../theory/sdt.txt"), collapse = "\n"))
-sdt_pruned <- theorytools:::prune_dag(sdt,
-                                      exposure = "intrinsic_motivation",
-                                      outcome = "wellbeing")
-writeLines(
-  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
-  "../R/generate_data.R"
-)
 
-writeLines(
-  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
-  "../R/analyze_data.R"
-)
-
-writeLines(
-  theorytools::simulate_data(sdt_pruned, n = 100, run = FALSE),
-  "../R/perform_study.R"
-)
 ```
 
 You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
-plot(pressure)
+
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

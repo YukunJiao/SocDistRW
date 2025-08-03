@@ -5,6 +5,7 @@
 
 # Load packages required to define the pipeline:
 library(targets)
+library(here)
 # library(tarchetypes) # Load other packages as needed.
 
 # Set target options:
@@ -45,20 +46,42 @@ tar_option_set(
 )
 
 # Run the R scripts in the R/ folder with your custom functions:
-tar_source()
+tar_source("R/")
 # tar_source("other_functions.R") # Source other scripts as needed.
 
 
 # Replace the target list below with your own:
 list(
   tar_target(
-    name = data,
-    command = generate_network()
+    name = attr_data,
+    command = read.csv(here("attr.csv"), header = TRUE)
+  ),
+  tar_target(
+    name = g_base,
+    command = assign_attributes(attr_data)
     # format = "qs" # Efficient storage for general data objects.
   ),
   tar_target(
-    name = model,
-    command = coefficients(lm(y ~ x, data = data))
+    network_name,
+    "friend"
+  ),
+  tar_target(
+    name = g,
+    command = create_networks(g_base, network_name)
+  ),
+  tar_target(
+    name = df,
+    command = data.frame(
+      attr_name = rep("office", 6),
+      source_attr = c(1, 1, 2, 2, 3, 3),
+      target_attr = c(2, 3, 1, 3, 1, 2),
+      stringsAsFactors = FALSE
+    )
+  ),
+  tar_target(
+    name = result_df,
+    command = compute_first_encounter_distance(g, df)
   ),
   tarchetypes::tar_render(manuscript, "manuscript/manuscript.Rmd")
 )
+

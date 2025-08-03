@@ -1,9 +1,5 @@
 library(igraph)
 
-# 构图和属性处理同你的脚本
-
-
-
 # 构造 transition matrix P（马尔可夫转移矩阵）
 get_transition_matrix <- function(g) {
   A <- as_adjacency_matrix(g, sparse = FALSE)  # 邻接矩阵
@@ -23,7 +19,7 @@ matrix_first_encounter_distance <- function(g, attr_name = "gender",
   
   if (length(source_nodes) == 0 || length(target_nodes) == 0) {
     warning("No valid source or target nodes.")
-    return(NA)
+    return(NA_real_)
   }
   
   P <- get_transition_matrix(g)
@@ -41,19 +37,12 @@ matrix_first_encounter_distance <- function(g, attr_name = "gender",
   
   # 只取来源节点（source_attr）中的 transient 节点的期望
   source_in_transient <- which(transient_nodes %in% source_nodes)
+  
+  if (length(source_in_transient) == 0) {
+    warning("All source nodes are absorbing. No transient sources.")
+    return(NA_real_)
+  }
+  
   mean_steps <- mean(expected_steps[source_in_transient])
   return(mean_steps)
 }
-
-# 从男性走到女性的 first encounter 平均步数
-matrix_first_encounter_distance(g, attr_name = "gender", source_attr = 1, target_attr = 2)
-
-# 从女性走到男性
-matrix_first_encounter_distance(g, attr_name = "gender", source_attr = 2, target_attr = 1)
-
-# 其他属性：
-matrix_first_encounter_distance(g, attr_name = "status", source_attr = 1, target_attr = 2)
-matrix_first_encounter_distance(g, attr_name = "status", source_attr = 2, target_attr = 1)
-
-matrix_first_encounter_distance(g, attr_name = "law_school", source_attr = 1, target_attr = 3)
-
