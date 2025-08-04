@@ -72,9 +72,9 @@ list(
   tar_target(
     name = df,
     command = data.frame(
-      attr_name = rep("office", 6),
-      source_attr = c(1, 1, 2, 2, 3, 3),
-      target_attr = c(2, 3, 1, 3, 1, 2),
+      attr_name = c(rep("gender", 2), rep("office", 2)),
+      source_attr = c(1, 2, 1, 2),
+      target_attr = c(2, 1, 2, 1),
       stringsAsFactors = FALSE
     )
   ),
