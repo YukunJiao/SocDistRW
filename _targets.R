@@ -63,7 +63,7 @@ list(
   ),
   tar_target(
     network_name,
-    "friend"
+    "advise"
   ),
   tar_target(
     name = g,
@@ -79,7 +79,11 @@ list(
     )
   ),
   tar_target(
-    name = result_df,
+    name = result_df_matrix,
+    command = matrix_first_encounter_distance(g, df)
+  ),
+  tar_target(
+    name = result_df_RW,
     command = compute_first_encounter_distance(g, df)
   ),
   tarchetypes::tar_render(manuscript, "manuscript/manuscript.Rmd")
